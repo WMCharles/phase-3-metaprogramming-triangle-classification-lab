@@ -1,36 +1,36 @@
-
 class Triangle
-  # write code here
-  attr_accessor :side_a, :side_b, :side_c
+  attr_reader :side1, :side2, :side3
 
-  def initialize(side_a,side_b,side_c)
-    @side_a = side_a
-    @side_b = side_b
-    @side_c = side_c
+  def initialize(side1, side2, side3)
+    @side1 = side1
+    @side2 = side2
+    @side3 = side3
   end
 
   def kind
-    sum_a = self.side_a + self.side_b
-    sum_b = self.side_b + self.side_c
-    sum_c = self.side_a + self.side_c
-
-    if(self.side_a <= 0 || self.side_b <= 0 || self.side_c <= 0 || sum_a<=self.side_c || sum_b<=self.side_a || sum_c<=self.side_b )     
-        raise TriangleError
-    elsif (self.side_a == self.side_b && self.side_b == self.side_c && self.side_a != 0)
-        return :equilateral
-      elsif (self.side_a==self.side_b || self.side_a==self.side_c || self.side_b == self.side_c)
-            return :isosceles
-        else
-          return :scalene
+    validate_triangle
+    if side1 == side2 && side2 == side3
+      :equilateral
+    elsif side1 == side2 || side2 == side3 || side1 == side3
+      :isosceles
+    else
+      :scalene
     end
+  end
+
+  def sides_greater_than_zero?
+    [side1, side2, side3].all?(&:positive?)
+  end
+
+  def valid_triangle_inequality?
+    side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1
+  end
+
+  def validate_triangle
+    raise TriangleError unless sides_greater_than_zero? && valid_triangle_inequality?
   end
 
   class TriangleError < StandardError
-    def message
-      "Check ur values"
-    end
   end
 
 end
-
-
