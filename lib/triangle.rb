@@ -22,16 +22,7 @@ class Triangle
     [side1, side2, side3].all?(&:positive?)
   end
 
-  def valid_triangle_inequality?class Triangle
-  attr_accessor :a, :b, :c
-  def initialize(a, b, c)
-    @a = a
-    @b = b
-    @c = c
-  end
-
-  def kind
-end
+  def valid_triangle_inequality?
     side1 + side2 > side3 && side1 + side3 > side2 && side2 + side3 > side1
   end
 
